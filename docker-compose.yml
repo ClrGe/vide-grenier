@@ -13,4 +13,3 @@ services:
       - 90:80
     volumes:
       - .:/var/www/html
-    command: composer install --ignore-platform-reqs
