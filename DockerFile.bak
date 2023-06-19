@@ -1,0 +1,11 @@
+FROM php:8.2-apache
+
+WORKDIR /var/www/html
+
+RUN apt-get update && apt-get install
+
+RUN composer install
+
+COPY my-apache.conf /etc/apache2/sites-available/000-default.conf
+
+RUN chown -R www-data:www-data /var/www/html && a2enmod rewrite
