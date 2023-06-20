@@ -1,9 +1,9 @@
 version: "3.8"
 
 services:
-  site:
+  php-DEV:
     depends_on:
-      - bdd
+      - mysql-DEV
     container_name: site-grenier-DEV
     build:
       context: .
@@ -13,13 +13,11 @@ services:
       - 90:80
     volumes:
       - .:/var/www/html
-    environment:
-      MYSQL_DATABASE: toto
-      MYSQL_USER: toto_user
-      MYSQL_PASSWORD: toto_password
+      - vendor:/var/www/html/vendor
     networks:
       - netbdd
-  bdd:
+  mysql-DEV:
+
     container_name: mysql-DEV
     restart: always
     image: mysql:5.7.41
@@ -27,12 +25,14 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: toto
-      MYSQL_USER: toto_user
-      MYSQL_PASSWORD: toto_password
+      MYSQL_DATABASE: videgrenierenligne
+      MYSQL_USER: webapplication
+      MYSQL_PASSWORD: 653rag9T
     volumes:
       - ./sql/import.sql:/docker-entrypoint-initdb.d/datadump.sql
     networks:
       - netbdd
 networks:
   netbdd:
+volumes:
+  vendor:
