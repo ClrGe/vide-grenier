@@ -1,3 +1,25 @@
+# Installation
+
+Tout d'abord il vous faut clone le repository ainsi qu'installer docker
+
+Parcourir les fichiers où vous avez clone le repository
+```
+cd 'your_local_path'/vide-grenier
+```
+
+Pour installer l'environnement 
+```
+./startup.sh
+```
+
+Pour vérifier que votre installation est fonctionnelle
+```
+docker ps
+```
+Vous devez avoir au minimum deux conteneurs dans la liste nommés :
+- site-grenier-{Environnement}
+- mysql-{Environnement}
+
 # Vide Grenier en Ligne
 
 Ce Readme.md est à destination des futurs repreneurs du site-web Vide Grenier en Ligne.
