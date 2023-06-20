@@ -22,20 +22,38 @@ class Product extends \Core\Controller
         if(isset($_POST['submit'])) {
 
             try {
-                $f = $_POST;
+                $f = $_POST;     
+                
+                $file = $_FILES['picture'];
 
-                // TODO: Validation
+                if($file['error'] > 0){
+                    throw new \Exception("Erreur dans l'upload de cette image");
+                }
+
+                if ($file['size'] > 4000000) {
+                    throw new \Exception("File exceeds maximum size (4MB)");
+                }
+
+                $fileExtensionsAllowed = ['jpeg', 'jpg', 'png'];
+                $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
+                
+                if (!in_array(strtolower($fileExtension), $fileExtensionsAllowed)) {
+                    throw new \Exception("This file extension is not allowed. Please upload a JPEG or PNG file");
+                }
 
                 $f['user_id'] = $_SESSION['user']['id'];
                 $id = Articles::save($f);
 
-                $pictureName = Upload::uploadFile($_FILES['picture'], $id);
-
+                // TODO: Validation
+                $pictureName = Upload::uploadFile($file, $id, $fileExtension);
+                
                 Articles::attachPicture($id, $pictureName);
 
                 header('Location: /product/' . $id);
+
+                
             } catch (\Exception $e){
-                    var_dump($e);
+                    print_r($e->getMessage());
             }
         }
 

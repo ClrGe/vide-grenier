@@ -5,30 +5,17 @@ namespace App\Utility;
 class Upload {
 
 
-    public static function uploadFile($file, $fileName)
+    public static function uploadFile($file, $fileName, $fileExtension)
     {
         $currentDirectory = getcwd();
         $uploadDirectory = "/storage/";
-
-
-        $fileExtensionsAllowed = ['jpeg', 'jpg', 'png'];
-
+        
         $fileSize = $file['size'];
         $fileTmpName = $file['tmp_name'];
 
-        $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $pictureName = basename($fileName . '.'. $fileExtension);
 
-
         $uploadPath = $currentDirectory . $uploadDirectory . $pictureName;
-
-        if (!in_array($fileExtension, $fileExtensionsAllowed)) {
-            throw new \Exception("This file extension is not allowed. Please upload a JPEG or PNG file");
-        }
-
-        if ($fileSize > 4000000) {
-            throw new \Exception("File exceeds maximum size (4MB)");
-        }
 
         $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
 

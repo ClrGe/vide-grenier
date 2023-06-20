@@ -14,10 +14,10 @@ services:
     volumes:
       - .:/var/www/html
       - vendor:/var/www/html/vendor
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - netbdd
   mysql-DEV:
-
     container_name: mysql-DEV
     restart: always
     image: mysql:5.7.41
