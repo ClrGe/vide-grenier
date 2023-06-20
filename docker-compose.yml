@@ -1,15 +1,38 @@
-version: "3"
+version: "3.8"
 
 services:
   site:
-    container_name: grenier
+    depends_on:
+      - bdd
+    container_name: site-grenier-DEV
     build:
       context: .
       dockerfile: Dockerfile
     image: my-vide-grenier
-    environment:
-      - "APACHE_LOG_DIR:/var/www/html"
     ports:
       - 90:80
     volumes:
       - .:/var/www/html
+    environment:
+      MYSQL_DATABASE: toto
+      MYSQL_USER: toto_user
+      MYSQL_PASSWORD: toto_password
+    networks:
+      - netbdd
+  bdd:
+    container_name: mysql-DEV
+    restart: always
+    image: mysql:5.7.41
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: toto
+      MYSQL_USER: toto_user
+      MYSQL_PASSWORD: toto_password
+    volumes:
+      - ./sql/import.sql:/docker-entrypoint-initdb.d/datadump.sql
+    networks:
+      - netbdd
+networks:
+  netbdd:
