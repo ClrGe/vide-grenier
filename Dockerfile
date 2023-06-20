@@ -6,17 +6,17 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libpq-dev \
     libzip-dev \
+    iputils-ping \
     zip \
     unzip \
     && docker-php-ext-install \
-    intl \
     pdo \
-    pdo_pgsql \
-    pgsql \
+    pdo_mysql \
+    intl \
     zip \
     && a2enmod \
     rewrite \
-    headers
+    headers 
 
 COPY my-apache.conf /etc/apache2/sites-available/000-default.conf
 
@@ -29,3 +29,8 @@ COPY . /var/www/html
 RUN composer install
 
 EXPOSE 80
+
+#RUN apt-get install -y nodejs \
+#    npm   
+
+#RUN npm install
