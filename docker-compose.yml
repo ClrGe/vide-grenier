@@ -17,6 +17,7 @@ services:
     networks:
       - netbdd
   mysql-DEV:
+
     container_name: mysql-DEV
     restart: always
     image: mysql:5.7.41
