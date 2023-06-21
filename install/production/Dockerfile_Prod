@@ -23,7 +23,7 @@ RUN apt-get -y install git
 
 RUN git init .
 RUN git config --global --add safe.directory '*'
-RUN git remote add origin https://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@github.com/ClrGe/vide-grenier.git
+RUN git remote add origin https://github.com/ClrGe/vide-grenier.git
 RUN git fetch
 RUN git checkout main
 
