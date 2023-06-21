@@ -6,7 +6,7 @@ use App\Utility\Hash;
 
 class UserTest extends TestCase
 {
-    
+
     public function testCreateUser()
     {
 
@@ -52,7 +52,6 @@ class UserTest extends TestCase
         $this->assertNotNull($user['email']);
         $this->assertNotNull($user['password']);
         $this->assertNotNull($user['salt']);
-
     }
 
     public function testGetByLoginValue()
@@ -74,8 +73,8 @@ class UserTest extends TestCase
         ];
 
         $this->assertEquals($user['username'], $data['username']);
-        $this->assertEquals($user['email'],$data['email']);
-        $this->assertEquals($user['password'],$data['password']);
-        $this->assertEquals($user['salt'],$data['salt']);
+        $this->assertEquals($user['email'], $data['email']);
+        $this->assertEquals($user['password'], $data['password']);
+        $this->assertEquals($user['salt'], $data['salt']);
     }
 }
