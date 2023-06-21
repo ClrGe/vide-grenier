@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Articles;
 use App\Utility\Upload;
+use App\Utility\Mail;
 use \Core\View;
 
 /**
@@ -19,7 +20,7 @@ class Product extends \Core\Controller
     public function indexAction()
     {
 
-        if(isset($_POST['submit'])) {
+        if (isset($_POST['submit'])) {
 
             try {
                 $f = $_POST;
@@ -34,8 +35,8 @@ class Product extends \Core\Controller
                 Articles::attachPicture($id, $pictureName);
 
                 header('Location: /product/' . $id);
-            } catch (\Exception $e){
-                    var_dump($e);
+            } catch (\Exception $e) {
+                var_dump($e);
             }
         }
 
@@ -54,7 +55,7 @@ class Product extends \Core\Controller
             Articles::addOneView($id);
             $suggestions = Articles::getSuggest();
             $article = Articles::getOne($id);
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             var_dump($e);
         }
 
@@ -62,5 +63,20 @@ class Product extends \Core\Controller
             'article' => $article[0],
             'suggestions' => $suggestions
         ]);
+    }
+
+    public function mailAction()
+    {
+        if (isset($_POST['recipient']) && isset($_POST['username']) && isset($_POST['message'])) {
+
+            try {
+                $f = $_POST;
+
+                $send = Mail::send($f['recipient'], $f['username'], $f['message']);
+                
+            } catch (\Exception $e) {
+                var_dump($e);
+            }
+        }
     }
 }

@@ -38,8 +38,22 @@
                     </div>
                     <div class="u-area mt-small">
 
-                    <a name="submit" href="mailto:{{article.email}}" class="btn btn-primary u-btn">Contacter {{article
-                        .username}}</a>
+                    <!-- <a name="submit" href="mailto:{{article.email}}" class="btn btn-primary u-btn">Contacter {{article
+                        .username}}</a> -->
+
+                        <div class="u-area mt-small">
+                            <form method="post" action="mail">
+                                <input type="hidden" name="recipient" value="{{ article.email }}">
+                                <input type="hidden" name="username" value="{{ article.username }}">
+                        
+                                <div class="form-group">
+                                    <label for="message">Message:</label>
+                                    <textarea id="message" name="message" class="form-control" required></textarea>
+                                </div>
+                        
+                                <button type="submit" class="btn btn-primary u-btn">Contacter {{ article.username }}</button>
+                            </form>
+                        </div>
 
                     </div>
                 </div>

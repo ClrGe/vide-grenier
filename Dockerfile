@@ -30,7 +30,7 @@ RUN COMPOSER_ALLOW_SUPERUSER=1  composer install
 
 EXPOSE 80
 
-#RUN apt-get install -y nodejs \
-#    npm   
+#RUN APT-GET INSTALL -Y NODEJS \
+#    NPM   
 
-#RUN npm install
+#RUN NPM INSTALL
