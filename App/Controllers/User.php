@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controllers;
 
 use App\Config;
@@ -13,22 +14,18 @@ use Exception;
 use http\Env\Request;
 use http\Exception\InvalidArgumentException;
 
+
 /**
  * User controller
  */
+
+
 class User extends Controller
 {
-
-    /**
-     * Affiche la page de login
-     */
-    public function loginAction()
+     public function loginAction()
     {
         if(isset($_POST['submit'])){
             $f = $_POST;
-
-            // TODO: Validation
-
             $this->login($f);
 
             // Si login OK, redirige vers le compte
@@ -38,35 +35,46 @@ class User extends Controller
         View::renderTemplate('User/login.html');
     }
 
-    /**
-     * Page de création de compte
-     */
+
     public function registerAction()
     {
         if(isset($_POST['submit'])){
             $f = $_POST;
 
             if($f['password'] !== $f['password-check']){
-                // TODO: Gestion d'erreur côté utilisateur
+                // display error
+                throw new InvalidArgumentException('Les mots de passe ne correspondent pas');
             }
 
             // validation
-            
+
             $this->register($f);
 
             if ($this->login($f)){
                 header('Location: /account');
-            }            
-            
+            }
+
         }
 
         View::renderTemplate('User/register.html');
     }
 
+
+
+
     /**
      * Affiche la page du compte
      */
-    public function accountAction()
+
+    /**
+     * @OA\Get(
+     *     path="/account",
+     *     @OA\Response(response="200", description="Display the user account"),
+     *     security={{"session":{}}},
+     *     tags={"User"}
+     *     )
+     */
+     public function accountAction()
     {
         $articles = Articles::getByUser($_SESSION['user']['id']);
 
@@ -74,10 +82,39 @@ class User extends Controller
             'articles' => $articles
         ]);
     }
-
     /*
      * Fonction privée pour enregister un utilisateur
      */
+    /**
+     * @OA\Post(
+     *     path="/register",
+     *     @OA\Response(response="200", description="Register"),
+     *     tags={"User"},
+     *     @OA\RequestBody(
+     *         description="Register",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="username",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password-check",
+     *                     type="string"
+     *                 ),
+     *                 example={"email": "c@g.c", "username": "c", "password": "c", "password-check": "c"}
+     *        ) ) ) ) )
+     */
+
     private function register($data)
     {
         try {
@@ -100,9 +137,32 @@ class User extends Controller
         }
     }
 
-    private function login($data){
+
+    // swagger-php
+    /**
+     * @OA\Post(
+     *     path="/login",
+     *     @OA\Response(response="200", description="Login"),
+     *     tags={"User"},
+     *     @OA\RequestBody(
+     *         description="Login",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="password", type="string"),
+     *                 @OA\Property(property="remember", type="boolean"),
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    private function login($data)
+    {
         try {
-            if(!isset($data['email'])){
+            if (!isset($data['email'])) {
                 throw new Exception('TODO');
             }
 
@@ -112,9 +172,12 @@ class User extends Controller
                 return false;
             }
 
-            // TODO: Create a remember me cookie if the user has selected the option
-            // to remained logged in on the login form.
-            // https://github.com/andrewdyer/php-mvc-register-login/blob/development/www/app/Model/UserLogin.php#L86
+            // Set cookie if remember me is checked
+            if (isset($data['remember'])) {
+                $cookie = 'remember_me';
+                setcookie($cookie, $user['id'], time() + (86400 * 30), "/");
+            }
+
 
             $_SESSION['user'] = array(
                 'id' => $user['id'],
@@ -137,15 +200,18 @@ class User extends Controller
      * @return boolean
      * @since 1.0.2
      */
-    public function logoutAction() {
 
-        /*
-        if (isset($_COOKIE[$cookie])){
-            // TODO: Delete the users remember me cookie if one has been stored.
-            // https://github.com/andrewdyer/php-mvc-register-login/blob/development/www/app/Model/UserLogin.php#L148
-        }*/
+    /** @OA\Get(
+     *     path="/logout",
+     *     @OA\Response(response="200", description="Logout")
+     * )
+     */
+    private function logout()
+    {
+        setcookie('remember_me', null, -1, '/');
+        unset($_COOKIE['remember_me']);
+
         // Destroy all data registered to the session.
-
         $_SESSION = array();
 
         if (ini_get("session.use_cookies")) {
@@ -162,5 +228,4 @@ class User extends Controller
 
         return true;
     }
-
 }

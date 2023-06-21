@@ -57,8 +57,6 @@ class View
         echo $twig->render($template, View::setDefaultVariables($args));
     }
 
-
-
     /**
      * Ajoute les données à fournir à toutes les pages
      * @param array $args
