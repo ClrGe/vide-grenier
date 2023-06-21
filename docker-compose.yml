@@ -14,6 +14,7 @@ services:
     volumes:
       - .:/var/www/html
       - vendor:/var/www/html/vendor
+      - node_modules:/var/www/html/node_modules
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - netbdd
@@ -36,3 +37,4 @@ networks:
   netbdd:
 volumes:
   vendor:
+  node_modules:
