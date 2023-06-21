@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  php-release:
+    depends_on:
+      - mysql-release
+    container_name: site-grenier-release
+    build:
+      context: .
+      dockerfile: Dockerfile_Rel
+    image: my-vide-grenier_release
+    ports:
+      - 91:80
+    networks:
+      - netbdd_release
+    volumes:
+      - ../my-apache.conf:/etc/apache2/sites-available/000-default.conf
+      - ../uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+  mysql-release:
+    container_name: mysql-release
+    restart: always
+    image: mysql:5.7.41
+    ports:
+      - 3305:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: videgrenierenligne
+      MYSQL_USER: webapplication
+      MYSQL_PASSWORD: 653rag9T
+    volumes:
+      - ../../sql/import.sql:/docker-entrypoint-initdb.d/datadump.sql
+      - ../my.cnf:/etc/my.cnf
+    networks:
+      - netbdd_release
+networks:
+  netbdd_release:
