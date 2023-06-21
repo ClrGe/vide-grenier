@@ -18,17 +18,20 @@ RUN apt-get update && apt-get install -y \
     rewrite \
     headers 
 
-COPY my-apache.conf /etc/apache2/sites-available/000-default.conf
+# Clone the repo
+RUN apt-get -y install git
+
+RUN git init .
+RUN git config --global --add safe.directory '*'
+RUN git remote add origin https://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@github.com/ClrGe/vide-grenier.git
+RUN git fetch origin
+RUN git checkout develop
 
 RUN chown -R www-data:www-data /var/www/html && a2enmod rewrite
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-COPY . /var/www/html
-
 RUN COMPOSER_ALLOW_SUPERUSER=1  composer install
-
-EXPOSE 80
 
 #RUN apt-get install -y nodejs \
 #    npm   
