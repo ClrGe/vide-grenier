@@ -1,27 +1,27 @@
 version: "3.8"
 
 services:
-  php-Rel-Beta-1:
+  php-Prod:
     depends_on:
-      - mysql-Rel-Beta-1
-    container_name: site-grenier-Rel-Beta-1
+      - mysql-Prod
+    container_name: site-grenier-Prod
     build:
       context: .
-      dockerfile: Dockerfile_Rel
-    image: my-vide-grenier_rel-beta-1
+      dockerfile: Dockerfile_Prod
+    image: my-vide-grenier_prod
     ports:
-      - 91:80
+      - 92:80
     networks:
-      - netbdd_rel_beta-1
+      - netbdd_prod
     volumes:
       - ../my-apache.conf:/etc/apache2/sites-available/000-default.conf
       - ../uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-  mysql-Rel-Beta-1:
-    container_name: mysql-Rel-Beta-1
+  mysql-Prod:
+    container_name: mysql-Prod
     restart: always
     image: mysql:5.7.41
     ports:
-      - 3305:3306
+      - 3308:3306
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: videgrenierenligne
@@ -30,6 +30,6 @@ services:
     volumes:
       - ../../sql/import.sql:/docker-entrypoint-initdb.d/datadump.sql
     networks:
-      - netbdd_rel_beta-1
+      - netbdd_prod
 networks:
-  netbdd_rel_beta-1:
+  netbdd_prod:
