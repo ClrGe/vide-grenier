@@ -14,7 +14,7 @@ class Config
      * Database host
      * @var string
      */
-    const DB_HOST = 'mysql-Rel-beta-1';
+    const DB_HOST = 'mysql-Rel-Beta-1';
 
     /**
      * Database name
