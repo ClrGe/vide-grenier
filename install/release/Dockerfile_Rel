@@ -25,8 +25,8 @@ RUN git init .
 RUN git config --global --add safe.directory '*'
 RUN git remote add origin https://github.com/ClrGe/vide-grenier.git
 # Change release/name
-RUN git pull origin release/beta-1
-RUN git checkout release/beta-1
+RUN git pull origin release/rel_1
+RUN git checkout release/rel_1
 
 RUN chown -R www-data:www-data /var/www/html && a2enmod rewrite
 
