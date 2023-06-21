@@ -2,6 +2,8 @@
 
 namespace App\Utility;
 
+use Exception;
+
 class Upload {
 
 
@@ -22,7 +24,7 @@ class Upload {
         if ($didUpload) {
             return $pictureName;
         } else {
-            throw new \Exception("An error occurred. Please contact the administrator.");
+            throw new Exception("An error occurred. Please contact the administrator.");
         }
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Exception;
+
 /**
  * Router
  *
@@ -114,7 +116,7 @@ class Router
             if (class_exists($controller)) {
 
                 if(isset($this->params['private']) && !isset($_SESSION['user']['id'])){
-                    throw new \Exception("You must be logged in");
+                    throw new Exception("You must be logged in");
                 }
 
                 $controller_object = new $controller($this->params);
@@ -126,13 +128,13 @@ class Router
                     $controller_object->$action();
 
                 } else {
-                    throw new \Exception("Method $action in controller $controller cannot be called directly - remove the Action suffix to call this method");
+                    throw new Exception("Method $action in controller $controller cannot be called directly - remove the Action suffix to call this method");
                 }
             } else {
-                throw new \Exception("Controller class $controller not found");
+                throw new Exception("Controller class $controller not found");
             }
         } else {
-            throw new \Exception('No route matched.', 404);
+            throw new Exception('No route matched.', 404);
         }
     }
 
@@ -185,6 +187,8 @@ class Router
      *
      * @return string The URL with the query string variables removed
      */
+
+
     protected function removeQueryStringVariables($url)
     {
         if ($url != '') {
