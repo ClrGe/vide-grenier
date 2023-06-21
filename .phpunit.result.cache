@@ -1,0 +1,1 @@
+{"version":1,"defects":{"UserTest::testCreateUser":7,"UserTest::testGetByLogin":5,"UserTest::testLogin":7,"UserTest::testGetByLoginValue":7},"times":{"UserTest::testCreateUser":0.016,"UserTest::testGetByLogin":0.002,"UserTest::testLogin":0.011,"UserTest::testGetByLoginIsArray":0.002,"UserTest::testGetByLoginValue":0.005,"UserTest::testGetByLoginNotNull":0.003}}
