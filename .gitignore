@@ -1,6 +1,0 @@
-vendor
-nodes_modules
-.idea
-composer.lock
-/public/storage
-./App/Config.php
