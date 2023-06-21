@@ -1,0 +1,5 @@
+vendor
+.idea
+composer.lock
+/public/storage
+./App/Config.php
