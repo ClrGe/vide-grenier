@@ -2,6 +2,11 @@
 
 namespace Core;
 
+use Exception;
+use Twig\Environment;
+use Twig\Extension\DebugExtension;
+use Twig\Loader\FilesystemLoader;
+
 /**
  * View
  *
@@ -27,7 +32,7 @@ class View
         if (is_readable($file)) {
             require $file;
         } else {
-            throw new \Exception("$file not found");
+            throw new Exception("$file not found");
         }
     }
 
@@ -44,9 +49,9 @@ class View
         static $twig = null;
 
         if ($twig === null) {
-            $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/App/Views');
-            $twig = new \Twig\Environment($loader, ['debug' => true,]);
-            $twig->addExtension(new \Twig\Extension\DebugExtension());
+            $loader = new FilesystemLoader(dirname(__DIR__) . '/App/Views');
+            $twig = new Environment($loader, ['debug' => true,]);
+            $twig->addExtension(new DebugExtension());
         }
 
         echo $twig->render($template, View::setDefaultVariables($args));

@@ -7,7 +7,8 @@ use App\Model\UserRegister;
 use App\Models\Articles;
 use App\Utility\Hash;
 use App\Utility\Session;
-use \Core\View;
+use Core\Controller;
+use Core\View;
 use Exception;
 use http\Env\Request;
 use http\Exception\InvalidArgumentException;
@@ -15,7 +16,7 @@ use http\Exception\InvalidArgumentException;
 /**
  * User controller
  */
-class User extends \Core\Controller
+class User extends Controller
 {
 
     /**

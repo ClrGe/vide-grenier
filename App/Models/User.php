@@ -7,6 +7,7 @@ use Core\Model;
 use App\Core;
 use Exception;
 use App\Utility;
+use PDO;
 
 /**
  * User Model:
@@ -42,7 +43,7 @@ class User extends Model {
         $stmt->bindParam(':email', $login);
         $stmt->execute();
 
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 
@@ -59,7 +60,7 @@ class User extends Model {
 
         $stmt->execute([$id]);
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 

@@ -4,13 +4,14 @@ namespace App\Controllers;
 
 use App\Models\Articles;
 use App\Models\Cities;
-use \Core\View;
+use Core\Controller;
+use Core\View;
 use Exception;
 
 /**
  * API controller
  */
-class Api extends \Core\Controller
+class Api extends Controller
 {
 
     /**

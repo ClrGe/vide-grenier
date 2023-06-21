@@ -7,6 +7,7 @@ use Core\Model;
 use App\Core;
 use Exception;
 use App\Utility;
+use PDO;
 
 /**
  * City Model:
@@ -24,6 +25,6 @@ class Cities extends Model {
 
         $stmt->execute();
 
-        return $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
     }
 }

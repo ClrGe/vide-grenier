@@ -7,6 +7,7 @@ use App\Core;
 use DateTime;
 use Exception;
 use App\Utility;
+use PDO;
 
 /**
  * Articles Model
@@ -37,7 +38,7 @@ class Articles extends Model {
 
         $stmt = $db->query($query);
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -57,7 +58,7 @@ class Articles extends Model {
 
         $stmt->execute([$id]);
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -93,7 +94,7 @@ class Articles extends Model {
 
         $stmt->execute([$id]);
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -112,7 +113,7 @@ class Articles extends Model {
 
         $stmt->execute();
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 

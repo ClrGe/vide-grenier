@@ -3,20 +3,21 @@
 namespace App\Controllers;
 
 use App\Models\Articles;
-use \Core\View;
+use Core\Controller;
+use Core\View;
 use Exception;
 
 /**
  * Home controller
  */
-class Home extends \Core\Controller
+class Home extends Controller
 {
 
     /**
      * Affiche la page d'accueil
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function indexAction()
     {
