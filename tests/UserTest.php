@@ -6,11 +6,7 @@ use App\Utility\Hash;
 
 class UserTest extends TestCase
 {
-    /**
-     * Test createUser method
-     *
-     * @return void
-     */
+    
     public function testCreateUser()
     {
 
@@ -30,11 +26,6 @@ class UserTest extends TestCase
         $this->assertIsInt((int)$userId);
     }
 
-    /**
-     * Test getByLogin method response is an array
-     *
-     * @return void
-     */
     public function testGetByLoginIsArray()
     {
         $login = 'testuser@example.com';
@@ -49,11 +40,6 @@ class UserTest extends TestCase
         $this->assertArrayHasKey('salt', $user);
     }
 
-        /**
-     * Test getByLogin method response is not null
-     *
-     * @return void
-     */
     public function testGetByLoginNotNull()
     {
         $login = 'testuser@example.com';
@@ -69,11 +55,6 @@ class UserTest extends TestCase
 
     }
 
-           /**
-     * Test getByLogin method response correspond expected value
-     *
-     * @return void
-     */
     public function testGetByLoginValue()
     {
         $login = 'testuser@example.com';
