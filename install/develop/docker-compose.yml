@@ -6,18 +6,19 @@ services:
       - mysql-DEV
     container_name: site-grenier-DEV
     build:
-      context: .
-      dockerfile: Dockerfile
-    image: my-vide-grenier
+      context: ../../
+      dockerfile: ./install/develop/Dockerfile
+    image: my-vide-grenier_dev
     ports:
       - 90:80
     volumes:
-      - .:/var/www/html
+      - ../my-apache.conf:/etc/apache2/sites-available/000-default.conf
+      - ../uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ../../.:/var/www/html
       - vendor:/var/www/html/vendor
       - node_modules:/var/www/html/node_modules
-      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
-      - netbdd
+      - netbdd_dev
   mysql-DEV:
     container_name: mysql-DEV
     restart: always
@@ -30,11 +31,12 @@ services:
       MYSQL_USER: webapplication
       MYSQL_PASSWORD: 653rag9T
     volumes:
-      - ./sql/import.sql:/docker-entrypoint-initdb.d/datadump.sql
+      - ../../sql/import.sql:/docker-entrypoint-initdb.d/datadump.sql
+      - ../my.cnf:/etc/my.cnf
     networks:
-      - netbdd
+      - netbdd_dev
 networks:
-  netbdd:
+  netbdd_dev:
 volumes:
   vendor:
   node_modules:
