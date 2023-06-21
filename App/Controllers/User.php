@@ -19,6 +19,17 @@ use http\Exception\InvalidArgumentException;
  * User controller
  */
 
+/**
+ * @OA\Info(title="API", version="0.1")
+ * @OA\Server(url="http://localhost:8080")
+ * @OA\SecurityScheme(
+ *     securityScheme="session",
+ *     type="apiKey",
+ *     in="header",
+ *     name="PHPSESSID"
+ * )
+ */
+
 
 class User extends Controller
 {

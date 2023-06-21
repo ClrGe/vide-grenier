@@ -26,22 +26,13 @@ $openapi = \OpenApi\Generator::scan([dirname(__DIR__) . '/App/Controllers', dirn
 $openapi->toJson();
 
 // print json to file
-$openapi->saveAs("public/openapi.json");
-
-
-
 // save json to file
 try {
-    $openapi->saveAs("public/openapi.json");
+    $openapi->saveAs("./openapi.json");
 } catch (Exception $e) {
+    echo $e->getMessage();
 }
-// generate yaml
-$openapi->toYaml();
-// save yaml to file
-try {
-    $openapi->saveAs('public/openapi.yaml');
-} catch (Exception $e) {
-}
+
 
 /**
  * Routing
