@@ -29,6 +29,7 @@ services:
       MYSQL_PASSWORD: 653rag9T
     volumes:
       - ../../sql/import.sql:/docker-entrypoint-initdb.d/datadump.sql
+      - ../my.cnf:/etc/my.cnf
     networks:
       - netbdd_prod
 networks:
