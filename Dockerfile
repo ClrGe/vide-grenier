@@ -6,20 +6,17 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libpq-dev \
     libzip-dev \
-    libxml2-dev \
     iputils-ping \
     zip \
-    unzip \    
+    unzip \
     && docker-php-ext-install \
     pdo \
     pdo_mysql \
     intl \
     zip \
-    xml \
     && a2enmod \
     rewrite \
     headers 
-
 
 COPY my-apache.conf /etc/apache2/sites-available/000-default.conf
 
