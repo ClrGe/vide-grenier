@@ -16,7 +16,7 @@ services:
     volumes:
       - ../my-apache.conf:/etc/apache2/sites-available/000-default.conf
       - ../uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-  mysql-Rel-Beta-1:
+  mysql-release:
     container_name: mysql-release
     restart: always
     image: mysql:5.7.41
