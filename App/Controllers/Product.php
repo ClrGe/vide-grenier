@@ -18,6 +18,15 @@ class Product extends Controller
      * Affiche la page d'ajout
      * @return void
      */
+
+    /**
+     * @OA\Post (
+     *     path="/product/add",
+     *     @OA\Response(response="200", description="Display the add product form"),
+     *     security={{"session":{}}},
+     *     tags={"Product"}
+        *     )
+     */
     public function indexAction()
     {
 
@@ -46,7 +55,6 @@ class Product extends Controller
                 $f['user_id'] = $_SESSION['user']['id'];
                 $id = Articles::save($f);
 
-                // TODO: Validation
                 $pictureName = Upload::uploadFile($file, $id, $fileExtension);
                 
                 Articles::attachPicture($id, $pictureName);
@@ -66,6 +74,14 @@ class Product extends Controller
      * Affiche la page d'un produit
      * @return void
      */
+     /**
+      * @OA\Get(
+      *     path="/product/{id}",
+      *     @OA\Response(response="200", description="Display the product page"),
+      *     tags={"Product"}
+      *     )
+      */
+
     public function showAction()
     {
         $id = $this->route_params['id'];

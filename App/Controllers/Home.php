@@ -19,6 +19,14 @@ class Home extends Controller
      * @return void
      * @throws Exception
      */
+
+    /**
+     * @OA\Get (
+     *     path="/",
+     *     @OA\Response(response="200", description="Display the home page"),
+     *     tags={"Home"}
+     *)
+     */
     public function indexAction()
     {
 
