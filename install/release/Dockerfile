@@ -28,7 +28,6 @@ RUN git checkout -f release/rel_1
 RUN git pull
 
 COPY pull.sh /var/www/html
-RUN ./pull.sh
 
 RUN chown -R www-data:www-data /var/www/html && a2enmod rewrite
 
