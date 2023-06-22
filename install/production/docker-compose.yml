@@ -7,7 +7,7 @@ services:
     container_name: site-grenier-Prod
     build:
       context: .
-      dockerfile: Dockerfile_Prod
+      dockerfile: Dockerfile
     image: my-vide-grenier_prod
     ports:
       - 92:80

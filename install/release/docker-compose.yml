@@ -7,7 +7,7 @@ services:
     container_name: site-grenier-release
     build:
       context: .
-      dockerfile: Dockerfile_Rel
+      dockerfile: Dockerfile
     image: my-vide-grenier_release
     ports:
       - 91:80
