@@ -25,6 +25,7 @@ RUN git init .
 RUN git config --global --add safe.directory '*'
 RUN git remote add origin https://github.com/ClrGe/vide-grenier.git
 # Change release/name
+RUN git fetch origin release/rel_1
 RUN git pull origin release/rel_1
 RUN git checkout release/rel_1
 

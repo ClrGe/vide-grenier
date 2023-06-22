@@ -24,6 +24,7 @@ RUN apt-get -y install git
 RUN git init .
 RUN git config --global --add safe.directory '*'
 RUN git remote add origin https://github.com/ClrGe/vide-grenier.git
+RUN git fetch origin main
 RUN git pull origin main
 RUN git checkout main
 
