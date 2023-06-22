@@ -124,9 +124,9 @@ try {
 }
 
 // 404
-if($router->getRoute() == null){
+if($router->getRoutes() == null){
     header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
     // display 404 page from view
     $view = new Core\View();
     echo $view->render('404.html');
-} else if {
+}
