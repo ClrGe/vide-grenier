@@ -8,7 +8,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: my-vide-grenier_release
+    image: my-vide-grenier_release:release
     ports:
       - 91:80
     networks:
@@ -30,7 +30,10 @@ services:
     volumes:
       - ../../sql/import.sql:/docker-entrypoint-initdb.d/datadump.sql
       - ../my.cnf:/etc/my.cnf
+      - bdd_REL:/var/lib/mysql
     networks:
       - netbdd_release
 networks:
   netbdd_release:
+volumes:
+  bdd_REL:
