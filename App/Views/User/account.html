@@ -8,7 +8,7 @@
 
     <div class="container-fluid account-header">
         <div class="row">
-            <h1>
+            <h1>                
                 {{ user.username }}
             </h1>
 
@@ -46,6 +46,46 @@
                                 </div>
                             </div>
                         </div>
+
+                        {% if (user.isAdmin == 1) %}
+
+                        <div class="cb-content articlelist">
+                            <div class="row">
+                                <div class=" col-lg-3 col-sm-6 articleitem">
+                                    <div class="b-article">
+                                        <div class="v-desc">
+                                            <label>Nombre d'articles</label>
+                                        </div>
+                                        <div class="v-views">
+                                            {{count}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" col-lg-3 col-sm-6 articleitem">
+                                    <div class="b-article">
+                                        <div class="v-desc">
+                                            <label>Nombre d'utilisateurs</label>
+                                        </div>
+                                        <div class="v-views">
+                                            {{users}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" col-lg-3 col-sm-6 articleitem">
+                                    <div class="b-article">
+                                        <div class="v-desc">
+                                            <label>Articles moyen par utilisateur</label>
+                                        </div>
+                                        <div class="v-views">
+                                            {{moyenne}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endif %}  
+
                         <div class="cb-content articlelist">
                             <div class="row">
                                 {% for article in articles %}
