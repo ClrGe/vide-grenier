@@ -3,3 +3,4 @@ node_modules
 .idea
 composer.lock
 ./App/Config.php
+.phpunit.result.cache

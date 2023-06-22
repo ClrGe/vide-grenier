@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libpq-dev \
     libzip-dev \
+    libxml2-dev \
     iputils-ping \
     zip \
     unzip \
@@ -14,9 +15,11 @@ RUN apt-get update && apt-get install -y \
     pdo_mysql \
     intl \
     zip \
+    xml \
     && a2enmod \
     rewrite \
-    headers 
+    headers
+
 
 RUN chown -R www-data:www-data /var/www/html && a2enmod rewrite
 
