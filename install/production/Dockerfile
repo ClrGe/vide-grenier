@@ -21,12 +21,12 @@ RUN apt-get update && apt-get install -y \
 # Clone the repo
 RUN apt-get -y install git
 
-RUN git init .
 RUN git config --global --add safe.directory '*'
-RUN git remote add origin https://github.com/ClrGe/vide-grenier.git
-RUN git fetch origin main
-RUN git pull origin main
-RUN git checkout main
+RUN git clone https://github.com/ClrGe/vide-grenier.git .
+RUN git checkout -f main
+RUN git pull
+
+COPY ./pull.sh /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html && a2enmod rewrite
 
