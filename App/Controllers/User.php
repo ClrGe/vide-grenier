@@ -85,8 +85,19 @@ class User extends Controller
     {
         $articles = Articles::getByUser($_SESSION['user']['id']);
 
+        $allArticles = Articles::getAll('views');
+        $allUsers = \App\Models\User::getAll();
+
+        $count = count($allArticles);
+        $users = count($allUsers);
+
+        $moyenne = $count/$users;
+
         View::renderTemplate('User/account.html', [
-            'articles' => $articles
+            'articles' => $articles,
+            'count' => $count,
+            'users' => $users,
+            'moyenne' => $moyenne,
         ]);
     }
     /*
@@ -188,6 +199,7 @@ class User extends Controller
             $_SESSION['user'] = array(
                 'id' => $user['id'],
                 'username' => $user['username'],
+                'isAdmin' => $user['isAdmin'],
             );
 
             return true;

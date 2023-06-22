@@ -1,4 +1,6 @@
 vendor
-.idea/
+node_modules
+.idea
 composer.lock
-/public/storage
+./App/Config.php
+.phpunit.result.cache

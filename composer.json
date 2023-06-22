@@ -4,7 +4,7 @@
     "ext-pdo": "*",
     "ext-json": "*",
     "zircote/swagger-php": "^4.7",
-    "doctrine/annotations": "^2.0"
+    "phpunit/phpunit": "*"
   },
   "autoload": {
     "psr-4": {
