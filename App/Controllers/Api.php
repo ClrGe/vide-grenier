@@ -4,13 +4,14 @@ namespace App\Controllers;
 
 use App\Models\Articles;
 use App\Models\Cities;
-use \Core\View;
+use Core\Controller;
+use Core\View;
 use Exception;
 
 /**
  * API controller
  */
-class Api extends \Core\Controller
+class Api extends Controller
 {
 
     /**
@@ -32,6 +33,15 @@ class Api extends \Core\Controller
      * Recherche dans la liste des villes
      *
      * @throws Exception
+     */
+
+    /**
+     * @OA\Get (
+     *     path="/api/cities",
+     *     @OA\Response(response="200", description="Display the cities list"),
+     *     tags={"Cities"}
+     *     )
+     * )
      */
     public function CitiesAction(){
 

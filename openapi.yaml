@@ -1,0 +1,118 @@
+openapi: 3.0.0
+info:
+  title: API
+  version: '0.1'
+servers:
+  -
+    url: 'http://localhost:8080'
+paths:
+  /api/cities:
+    get:
+      tags:
+        - Cities
+      operationId: a0f15af3ba703749030849d863dcb260
+      responses:
+        '200':
+          description: 'Display the cities list'
+  /:
+    get:
+      tags:
+        - Home
+      operationId: 7d67e3620a1d1bc919fa0f61706e7dda
+      responses:
+        '200':
+          description: 'Display the home page'
+  /product/add:
+    post:
+      tags:
+        - Product
+      operationId: 8f6a3e26d3cbf22ed1d5293e1faf5120
+      responses:
+        '200':
+          description: 'Display the add product form'
+      security:
+        -
+          session: []
+  '/product/{id}':
+    get:
+      tags:
+        - Product
+      operationId: f445e04846c89947cd822920281c420c
+      responses:
+        '200':
+          description: 'Display the product page'
+  /account:
+    get:
+      tags:
+        - User
+      operationId: 0ff1c249453bcd21492db9a815228f41
+      responses:
+        '200':
+          description: 'Display the user account'
+      security:
+        -
+          session: []
+  /register:
+    post:
+      tags:
+        - User
+      operationId: f7c927a85f74754f9f2ea5f9494c681c
+      requestBody:
+        description: Register
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                email:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+                password-check:
+                  type: string
+              type: object
+              example:
+                email: c@g.c
+                username: c
+                password: c
+                password-check: c
+      responses:
+        '200':
+          description: Register
+  /login:
+    post:
+      tags:
+        - User
+      operationId: 982f2dc4b7bb1574c513b9b515310fc9
+      requestBody:
+        description: Login
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                remember:
+                  type: boolean
+              type: object
+      responses:
+        '200':
+          description: Login
+  /logout:
+    get:
+      tags:
+        - User
+      operationId: 851092ff95959c75ffb642785ae3a620
+      responses:
+        '200':
+          description: Logout
+components:
+  securitySchemes:
+    session:
+      type: apiKey
+      name: PHPSESSID
+      in: header

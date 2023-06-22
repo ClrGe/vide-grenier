@@ -7,6 +7,7 @@ use Core\Model;
 use App\Core;
 use Exception;
 use App\Utility;
+use PDO;
 
 /**
  * User Model:
@@ -19,8 +20,8 @@ class User extends Model {
     public static function createUser($data) {
         $db = static::getDB();
 
-        $stmt = $db->prepare('INSERT INTO users(username, email, password, salt) VALUES (:username, :email, :password,:salt)');
-
+        $stmt = $db->prepare('INSERT INTO users(username, email, password, salt) VALUES (:username, :email, :password, :salt)');
+        
         $stmt->bindParam(':username', $data['username']);
         $stmt->bindParam(':email', $data['email']);
         $stmt->bindParam(':password', $data['password']);
@@ -42,7 +43,23 @@ class User extends Model {
         $stmt->bindParam(':email', $login);
         $stmt->execute();
 
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    /**
+     * ?
+     * @access public
+     * @return string|boolean
+     * @throws Exception
+     */
+    public static function getAll() {
+        $db = static::getDB();
+
+        $query = 'SELECT * FROM users ';
+
+        $stmt = $db->query($query);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
@@ -59,7 +76,7 @@ class User extends Model {
 
         $stmt->execute([$id]);
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 

@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controllers;
 
 use App\Config;
@@ -7,27 +8,35 @@ use App\Model\UserRegister;
 use App\Models\Articles;
 use App\Utility\Hash;
 use App\Utility\Session;
-use \Core\View;
+use Core\Controller;
+use Core\View;
 use Exception;
 use http\Env\Request;
 use http\Exception\InvalidArgumentException;
 
+
 /**
  * User controller
  */
-class User extends \Core\Controller
-{
 
-    /**
-     * Affiche la page de login
-     */
+/**
+ * @OA\Info(title="API", version="0.1")
+ * @OA\Server(url="http://localhost:8080")
+ * @OA\SecurityScheme(
+ *     securityScheme="session",
+ *     type="apiKey",
+ *     in="header",
+ *     name="PHPSESSID"
+ * )
+ */
+
+
+class User extends Controller
+{
     public function loginAction()
     {
-        if(isset($_POST['submit'])){
+        if (isset($_POST['submit'])) {
             $f = $_POST;
-
-            // TODO: Validation
-
             $this->login($f);
 
             // Si login OK, redirige vers le compte
@@ -37,22 +46,24 @@ class User extends \Core\Controller
         View::renderTemplate('User/login.html');
     }
 
-    /**
-     * Page de création de compte
-     */
+
     public function registerAction()
     {
-        if(isset($_POST['submit'])){
+        if (isset($_POST['submit'])) {
             $f = $_POST;
 
-            if($f['password'] !== $f['password-check']){
-                // TODO: Gestion d'erreur côté utilisateur
+            if ($f['password'] !== $f['password-check']) {
+                // display error
+                throw new InvalidArgumentException('Les mots de passe ne correspondent pas');
             }
 
             // validation
 
             $this->register($f);
-            // TODO: Rappeler la fonction de login pour connecter l'utilisateur
+
+            if ($this->login($f)) {
+                header('Location: /account');
+            }
         }
 
         View::renderTemplate('User/register.html');
@@ -61,18 +72,67 @@ class User extends \Core\Controller
     /**
      * Affiche la page du compte
      */
+
+    /**
+     * @OA\Get(
+     *     path="/account",
+     *     @OA\Response(response="200", description="Display the user account"),
+     *     security={{"session":{}}},
+     *     tags={"User"}
+     *     )
+     */
     public function accountAction()
     {
         $articles = Articles::getByUser($_SESSION['user']['id']);
 
+        $allArticles = Articles::getAll('views');
+        $allUsers = \App\Models\User::getAll();
+
+        $count = count($allArticles);
+        $users = count($allUsers);
+
+        $moyenne = $count/$users;
+
         View::renderTemplate('User/account.html', [
-            'articles' => $articles
+            'articles' => $articles,
+            'count' => $count,
+            'users' => $users,
+            'moyenne' => $moyenne,
         ]);
     }
-
     /*
      * Fonction privée pour enregister un utilisateur
      */
+    /**
+     * @OA\Post(
+     *     path="/register",
+     *     @OA\Response(response="200", description="Register"),
+     *     tags={"User"},
+     *     @OA\RequestBody(
+     *         description="Register",
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="username",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="password-check",
+     *                     type="string"
+     *                 ),
+     *                 example={"email": "c@g.c", "username": "c", "password": "c", "password-check": "c"}
+     *        ) ) ) ) )
+     */
+
     private function register($data)
     {
         try {
@@ -88,16 +148,38 @@ class User extends \Core\Controller
             ]);
 
             return $userID;
-
         } catch (Exception $ex) {
             // TODO : Set flash if error : utiliser la fonction en dessous
             /* Utility\Flash::danger($ex->getMessage());*/
         }
     }
 
-    private function login($data){
+
+    // swagger-php
+    /**
+     * @OA\Post(
+     *     path="/login",
+     *     @OA\Response(response="200", description="Login"),
+     *     tags={"User"},
+     *     @OA\RequestBody(
+     *         description="Login",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="password", type="string"),
+     *                 @OA\Property(property="remember", type="boolean"),
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    private function login($data)
+    {
         try {
-            if(!isset($data['email'])){
+            if (!isset($data['email'])) {
                 throw new Exception('TODO');
             }
 
@@ -107,17 +189,20 @@ class User extends \Core\Controller
                 return false;
             }
 
-            // TODO: Create a remember me cookie if the user has selected the option
-            // to remained logged in on the login form.
-            // https://github.com/andrewdyer/php-mvc-register-login/blob/development/www/app/Model/UserLogin.php#L86
+            // Set cookie if remember me is checked
+            if (isset($data['remember'])) {
+                $cookie = 'remember_me';
+                setcookie($cookie, $user['id'], time() + (86400 * 30), "/");
+            }
+
 
             $_SESSION['user'] = array(
                 'id' => $user['id'],
                 'username' => $user['username'],
+                'isAdmin' => $user['isAdmin'],
             );
 
             return true;
-
         } catch (Exception $ex) {
             // TODO : Set flash if error
             /* Utility\Flash::danger($ex->getMessage());*/
@@ -132,30 +217,38 @@ class User extends \Core\Controller
      * @return boolean
      * @since 1.0.2
      */
-    public function logoutAction() {
 
-        /*
-        if (isset($_COOKIE[$cookie])){
-            // TODO: Delete the users remember me cookie if one has been stored.
-            // https://github.com/andrewdyer/php-mvc-register-login/blob/development/www/app/Model/UserLogin.php#L148
-        }*/
+    /** @OA\Get(
+     *     path="/logout",
+     *     tags={"User"},
+     *     @OA\Response(response="200", description="Logout")
+     * )
+     */
+    public function logoutAction()
+    {
+        setcookie('remember_me', null, -1, '/');
+        unset($_COOKIE['remember_me']);
+
         // Destroy all data registered to the session.
-
         $_SESSION = array();
 
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
             );
         }
 
         session_destroy();
 
-        header ("Location: /");
+        header("Location: /");
 
         return true;
     }
-
 }

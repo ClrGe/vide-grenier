@@ -7,11 +7,13 @@ use App\Core;
 use DateTime;
 use Exception;
 use App\Utility;
+use PDO;
 
 /**
  * Articles Model
  */
-class Articles extends Model {
+class Articles extends Model
+{
 
     /**
      * ?
@@ -19,12 +21,13 @@ class Articles extends Model {
      * @return string|boolean
      * @throws Exception
      */
-    public static function getAll($filter) {
+    public static function getAll($filter)
+    {
         $db = static::getDB();
 
         $query = 'SELECT * FROM articles ';
 
-        switch ($filter){
+        switch ($filter) {
             case 'views':
                 $query .= ' ORDER BY articles.views DESC';
                 break;
@@ -37,7 +40,7 @@ class Articles extends Model {
 
         $stmt = $db->query($query);
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -46,7 +49,8 @@ class Articles extends Model {
      * @return string|boolean
      * @throws Exception
      */
-    public static function getOne($id) {
+    public static function getOne($id)
+    {
         $db = static::getDB();
 
         $stmt = $db->prepare('
@@ -57,7 +61,7 @@ class Articles extends Model {
 
         $stmt->execute([$id]);
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -66,7 +70,8 @@ class Articles extends Model {
      * @return string|boolean
      * @throws Exception
      */
-    public static function addOneView($id) {
+    public static function addOneView($id)
+    {
         $db = static::getDB();
 
         $stmt = $db->prepare('
@@ -83,7 +88,8 @@ class Articles extends Model {
      * @return string|boolean
      * @throws Exception
      */
-    public static function getByUser($id) {
+    public static function getByUser($id)
+    {
         $db = static::getDB();
 
         $stmt = $db->prepare('
@@ -93,7 +99,7 @@ class Articles extends Model {
 
         $stmt->execute([$id]);
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -102,7 +108,8 @@ class Articles extends Model {
      * @return string|boolean
      * @throws Exception
      */
-    public static function getSuggest() {
+    public static function getSuggest()
+    {
         $db = static::getDB();
 
         $stmt = $db->prepare('
@@ -112,7 +119,7 @@ class Articles extends Model {
 
         $stmt->execute();
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
@@ -123,7 +130,8 @@ class Articles extends Model {
      * @return string|boolean
      * @throws Exception
      */
-    public static function save($data) {
+    public static function save($data)
+    {
         $db = static::getDB();
 
         $stmt = $db->prepare('INSERT INTO articles(name, description, user_id, published_date) VALUES (:name, :description, :user_id,:published_date)');
@@ -140,7 +148,8 @@ class Articles extends Model {
         return $db->lastInsertId();
     }
 
-    public static function attachPicture($articleId, $pictureName){
+    public static function attachPicture($articleId, $pictureName)
+    {
         $db = static::getDB();
 
         $stmt = $db->prepare('UPDATE articles SET picture = :picture WHERE articles.id = :articleid');
@@ -151,8 +160,4 @@ class Articles extends Model {
 
         $stmt->execute();
     }
-
-
-
-
 }

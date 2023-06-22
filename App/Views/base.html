@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">   
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8/" />
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/images/logo.png">
 
     <title>Vide Grenier En Ligne | {% block title %}{% endblock %}</title>
 
@@ -41,12 +42,12 @@
                     </div>
                     <div class="col-lg-3 col-sm-10 hidden-xs">
                         <ul class="list-inline menu">
-                            <li class="color-active"><a href="/product">Déposer une annonce</a></li>
+                            <li class="color-active"><a href="/product">Déposer très jolie une annonce</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-6 col-sm-8 col-xs-3">
-                        <!--<form action="search.html" method="post">
+                        <form action="search.html" method="post">
                             <div class="topsearch">
                                 <i class="cv cvicon-cv-cancel topsearch-close"></i>
                                 <div class="input-group">
@@ -55,7 +56,7 @@
                                            aria-describedby="sizing-addon2">
                                 </div>
                             </div>
-                        </form>-->
+                        </form>
                     </div>
 
                     {% if user is not null %}
@@ -69,6 +70,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a href="/account">Mon compte</a></li>
+                                    <!-- lien sans redirection mais avec un onclick -->
                                     <li><a href="/logout">Déconnexion</a></li>
                                 </ul>
                             </div>
