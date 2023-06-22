@@ -25,7 +25,7 @@ RUN git init .
 RUN git config --global --add safe.directory '*'
 RUN git remote add origin https://github.com/ClrGe/vide-grenier.git
 RUN git fetch origin main
-RUN git pull origin main
+RUN git reset --hard FETCH_HEAD
 RUN git checkout main
 
 RUN chown -R www-data:www-data /var/www/html && a2enmod rewrite
