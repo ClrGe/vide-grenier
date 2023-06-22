@@ -33,9 +33,9 @@ use http\Exception\InvalidArgumentException;
 
 class User extends Controller
 {
-     public function loginAction()
+    public function loginAction()
     {
-        if(isset($_POST['submit'])){
+        if (isset($_POST['submit'])) {
             $f = $_POST;
             $this->login($f);
 
@@ -49,10 +49,10 @@ class User extends Controller
 
     public function registerAction()
     {
-        if(isset($_POST['submit'])){
+        if (isset($_POST['submit'])) {
             $f = $_POST;
 
-            if($f['password'] !== $f['password-check']){
+            if ($f['password'] !== $f['password-check']) {
                 // display error
                 throw new InvalidArgumentException('Les mots de passe ne correspondent pas');
             }
@@ -61,10 +61,9 @@ class User extends Controller
 
             $this->register($f);
 
-            if ($this->login($f)){
+            if ($this->login($f)) {
                 header('Location: /account');
             }
-
         }
 
         View::renderTemplate('User/register.html');
@@ -82,7 +81,7 @@ class User extends Controller
      *     tags={"User"}
      *     )
      */
-     public function accountAction()
+    public function accountAction()
     {
         $articles = Articles::getByUser($_SESSION['user']['id']);
 
@@ -138,7 +137,6 @@ class User extends Controller
             ]);
 
             return $userID;
-
         } catch (Exception $ex) {
             // TODO : Set flash if error : utiliser la fonction en dessous
             /* Utility\Flash::danger($ex->getMessage());*/
@@ -193,7 +191,6 @@ class User extends Controller
             );
 
             return true;
-
         } catch (Exception $ex) {
             // TODO : Set flash if error
             /* Utility\Flash::danger($ex->getMessage());*/
@@ -215,7 +212,7 @@ class User extends Controller
      *     @OA\Response(response="200", description="Logout")
      * )
      */
-    private function logout()
+    public function logoutAction()
     {
         setcookie('remember_me', null, -1, '/');
         unset($_COOKIE['remember_me']);
@@ -225,15 +222,20 @@ class User extends Controller
 
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
             );
         }
 
         session_destroy();
 
-        header ("Location: /");
+        header("Location: /");
 
         return true;
     }
