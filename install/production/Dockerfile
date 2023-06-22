@@ -26,6 +26,8 @@ RUN git clone https://github.com/ClrGe/vide-grenier.git .
 RUN git checkout -f main
 RUN git pull
 
+COPY ./pull.sh /var/www/html
+
 RUN chown -R www-data:www-data /var/www/html && a2enmod rewrite
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
