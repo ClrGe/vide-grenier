@@ -23,7 +23,7 @@ RUN apt-get -y install git
 
 RUN git config --global --add safe.directory '*'
 RUN git clone https://github.com/ClrGe/vide-grenier.git .
-RUN git checkout -f main
+RUN git checkout -f production
 RUN git pull
 
 COPY ./pull.sh /var/www/html
