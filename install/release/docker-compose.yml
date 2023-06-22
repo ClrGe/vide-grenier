@@ -8,6 +8,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: git pull
     image: my-vide-grenier_release:release
     ports:
       - 91:80
