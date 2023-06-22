@@ -24,10 +24,8 @@ RUN apt-get -y install git
 RUN git config --global --add safe.directory '*'
 RUN git clone https://github.com/ClrGe/vide-grenier.git .
 # Change release/name
-RUN git checkout release/rel_1
-RUN git fetch origin release/rel_1
-#RUN git pull origin release/rel_1
-RUN git reset --hard FETCH_HEAD
+RUN git checkout -f release/rel_1
+RUN git pull
 
 RUN chown -R www-data:www-data /var/www/html && a2enmod rewrite
 
