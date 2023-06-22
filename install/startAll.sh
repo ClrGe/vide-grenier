@@ -6,4 +6,4 @@ docker-compose up -d
 docker exec site-grenier-release sh -c ./pull.sh
 cd ../production
 docker-compose up -d
-docker exec site-grenier-prod sh -c ./pull.sh
+docker exec site-grenier-Prod sh -c ./pull.sh
