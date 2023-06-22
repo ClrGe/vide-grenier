@@ -7,6 +7,10 @@ use App\Utility\Hash;
 class UserTest extends TestCase
 {
 
+    /**
+     * Test creating a user and storing the data in the database.
+     * It verifies that the user ID returned is an integer, indicating a successful user creation.
+     */
     public function testCreateUser()
     {
 
@@ -26,6 +30,10 @@ class UserTest extends TestCase
         $this->assertIsInt((int)$userId);
     }
 
+    /**
+     * Test retrieving a user by their login (email) and verifying the result is an array.
+     * It verifies that the retrieved user is an array and contains the expected keys.
+     */
     public function testGetByLoginIsArray()
     {
         $login = 'testuser@example.com';
@@ -40,6 +48,10 @@ class UserTest extends TestCase
         $this->assertArrayHasKey('salt', $user);
     }
 
+    /**
+     * Test retrieving a user by their login (email) and verifying that the result is not null.
+     * It verifies that the retrieved user and its specific fields are not null.
+     */
     public function testGetByLoginNotNull()
     {
         $login = 'testuser@example.com';
@@ -54,6 +66,10 @@ class UserTest extends TestCase
         $this->assertNotNull($user['salt']);
     }
 
+    /**
+     * Test retrieving a user by their login (email) and verifying the correctness of the returned values.
+     * It verifies that the retrieved user's username, email, password, and salt match the expected values.
+     */
     public function testGetByLoginValue()
     {
         $login = 'testuser@example.com';

@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 class UploadTest extends TestCase
 {
-    // public function testUploadFile()
-    // {
-    // }
+    public function testUploadFile()
+    {
+    }
 }
