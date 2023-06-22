@@ -29,6 +29,7 @@ RUN apt-get -y install git
 #RUN git reset --hard FETCH_HEAD
 #RUN git checkout release/rel_1
 
+RUN git config --global --add safe.directory '*'
 RUN git clone https://github.com/ClrGe/vide-grenier.git .
 RUN git checkout release/rel_1
 
