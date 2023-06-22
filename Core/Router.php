@@ -77,12 +77,10 @@ class Router
                         $params[$key] = $match;
                     }
                 }
-
                 $this->params = $params;
                 return true;
             }
         }
-
         return false;
     }
 

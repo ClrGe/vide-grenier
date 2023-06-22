@@ -18,6 +18,9 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 error_reporting(0);
 set_error_handler('Core\Error::errorHandler');
 set_exception_handler('Core\Error::exceptionHandler');
+
+
+
 /** Swagger */
 // generate openapi documentation with swagger-php
 $openapi = \OpenApi\Generator::scan([dirname(__DIR__) . '/App/Controllers', dirname(__DIR__) . '/Core']);
@@ -25,23 +28,14 @@ $openapi = \OpenApi\Generator::scan([dirname(__DIR__) . '/App/Controllers', dirn
 // generate json
 $openapi->toJson();
 
-// print json to file
-// save json to file
-try {
-    $openapi->saveAs("./openapi.json");
-} catch (Exception $e) {
-    echo $e->getMessage();
-}
+// openapi object to file
+
 
 
 /**
  * Routing
  */
 $router = new Core\Router();
-
-// Add the routes
-
-
 
 /**
  * @OA\Get(
@@ -113,6 +107,8 @@ $router->add('product/{id:\d+}', ['controller' => 'Product', 'action' => 'show']
 
 $router->add('{controller}/{action}');
 
+// serve a static file if it exists yaml
+
 
 /*
  * Gestion des erreurs dans le routing
@@ -126,3 +122,11 @@ try {
             break;
     }
 }
+
+// 404
+if($router->getRoute() == null){
+    header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
+    // display 404 page from view
+    $view = new Core\View();
+    echo $view->render('404.html');
+} else if {

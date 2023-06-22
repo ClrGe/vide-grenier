@@ -70,9 +70,6 @@ class User extends Controller
         View::renderTemplate('User/register.html');
     }
 
-
-
-
     /**
      * Affiche la page du compte
      */
@@ -214,6 +211,7 @@ class User extends Controller
 
     /** @OA\Get(
      *     path="/logout",
+     *     tags={"User"},
      *     @OA\Response(response="200", description="Logout")
      * )
      */

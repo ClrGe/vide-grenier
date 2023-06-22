@@ -26,7 +26,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . /var/www/html
 
-RUN COMPOSER_ALLOW_SUPERUSER=1  composer install
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install
 
 EXPOSE 80
 

@@ -34,6 +34,15 @@ class Api extends Controller
      *
      * @throws Exception
      */
+
+    /**
+     * @OA\Get (
+     *     path="/api/cities",
+     *     @OA\Response(response="200", description="Display the cities list"),
+     *     tags={"Cities"}
+     *     )
+     * )
+     */
     public function CitiesAction(){
 
         $cities = Cities::search($_GET['query']);
